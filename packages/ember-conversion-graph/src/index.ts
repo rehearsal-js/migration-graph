@@ -134,11 +134,27 @@ const parser = yargs
   .showHelpOnFail(true)
   .strict();
 
+function getChoices(addons: { [name: string]: Package }) {
+  const keys = Object.keys(addons);
+  return keys.map((name: string) => {
+    const addon: Package = addons[name];
+    return {
+      name: name,
+      value: name,
+      hint: path.relative(process.cwd(), addon.path),
+    };
+  });
+}
+
 function createPromptModule() {
+  const discovered = getInternalPackages(ROOT_PATH).mappingsByAddonName;
+
+  const choices = getChoices(discovered);
+
   return new Enquirer().prompt({
     name: 'addons',
     type: 'autocomplete',
-    choices: Object.keys(getInternalPackages(ROOT_PATH).mappingsByAddonName),
+    choices,
     scroll: true,
     sort: true,
     // limit isn't defined in the type yet: https://github.com/enquirer/enquirer/issues/95
@@ -179,11 +195,11 @@ async function getPaths(): Promise<Package[]> {
     return addons?.map((addonName) => mappingsByAddonName[addonName]) || [];
   }
 
-  /* if (argv.paths) {
-    return Promise.resolve(
-      argv.paths.split(',').map((pathToAddon) => path.resolve(pathToAddon))
-    );
-  } */
+  // if (argv.paths) {
+  //   return Promise.resolve(
+  //     argv.paths.split(',').map((pathToAddon) => path.resolve(pathToAddon))
+  //   );
+  // }
 
   if (ARGV.addons) {
     return Promise.resolve(
