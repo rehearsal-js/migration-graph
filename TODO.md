@@ -1,0 +1,2 @@
+- [ ] Create test-packages directory with examples ember apps.
+- [ ] What does `generate-tsconfig.paths.ts` do

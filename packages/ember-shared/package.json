@@ -1,0 +1,8 @@
+{
+  "name": "@rehearsal/ember-shared",
+  "version": "0.0.1",
+  "main": "index.js",
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

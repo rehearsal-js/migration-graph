@@ -1,0 +1,25 @@
+{
+  "name": "@rehearsal/ember-package-utils",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "nyc qunit tests/unit"
+  },
+  "dependencies": {
+    "@rehearsal/ember-shared": "*",
+    "fast-glob": "^3",
+    "micromatch": "^4",
+    "prettier": "^2.6.2",
+    "resolve-package-path": "^4.0.3",
+    "sort-package-json": "^1"
+  },
+  "devDependencies": {
+    "fixturify": "^2",
+    "nyc": "^15",
+    "qunit": "^2",
+    "tmp": "^0.2.1",
+    "walk-sync": "^2"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

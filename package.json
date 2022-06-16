@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/ember-conversion-graph",
+    "packages/ember-package-utils",
+    "packages/ember-shared"
+  ],
+  "volta": {
+    "node": "14.17.5",
+    "yarn": "1.22.19"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@rehearsal/ember-conversion-graph",
+  "version": "0.0.0",
+  "description": "Tool for generating a typescript conversion graph for an ember project",
+  "bin": {
+    "ember-conversion-graph": "./bin/cli.js"
+  },
+  "scripts": {
+    "prepare": "tsc"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3"
+  },
+  "devDependencies": {
+    "@babel/parser": "^7.18.4",
+    "@babel/traverse": "^7.18.2",
+    "@rehearsal/ember-package-utils": "*",
+    "@rehearsal/ember-shared": "*",
+    "@types/yargs": "^17.0.10",
+    "chalk": "^2.4.2",
+    "ember-template-recast": "^5.0.3",
+    "enquirer": "^2",
+    "fast-glob": "^3",
+    "micromatch": "^4",
+    "ora": "^4",
+    "typescript": "4.7.2",
+    "workerpool": "^6",
+    "yargs": "^13"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}
