@@ -1,6 +1,7 @@
 {
   "name": "@rehearsal/ember-shared",
   "version": "0.0.1",
+  "license": "BSD-2-Clause",
   "main": "index.js",
   "volta": {
     "extends": "../../package.json"

@@ -2,6 +2,7 @@
   "name": "@rehearsal/ember-conversion-graph",
   "version": "0.0.0",
   "description": "Tool for generating a typescript conversion graph for an ember project",
+  "license": "BSD-2-Clause",
   "bin": {
     "ember-conversion-graph": "./bin/cli.js"
   },
