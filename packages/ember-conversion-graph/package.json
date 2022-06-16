@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Tool for generating a typescript conversion graph for an ember project",
   "bin": {
-    "conversion-graph": "./bin/cli.js"
+    "ember-conversion-graph": "./bin/cli.js"
   },
   "scripts": {
     "prepare": "tsc"
