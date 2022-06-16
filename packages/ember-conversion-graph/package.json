@@ -7,7 +7,8 @@
     "ember-conversion-graph": "./bin/cli.js"
   },
   "scripts": {
-    "prepare": "tsc"
+    "prepare": "tsc",
+    "test": "vitest"
   },
   "dependencies": {
     "jsonc-parser": "^3"
