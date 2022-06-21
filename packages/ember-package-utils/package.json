@@ -1,6 +1,7 @@
 {
   "name": "@rehearsal/ember-package-utils",
   "version": "0.0.1",
+  "license": "BSD-2-Clause",
   "scripts": {
     "test": "nyc qunit tests/unit"
   },
