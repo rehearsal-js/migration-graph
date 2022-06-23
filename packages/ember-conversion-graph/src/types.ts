@@ -16,7 +16,7 @@ export type NodeContent = {
 
 export interface Arguments {
   help: string;
-  paths: string;
+  // paths: string;
   addons: string;
   interactive: boolean;
   output: string;

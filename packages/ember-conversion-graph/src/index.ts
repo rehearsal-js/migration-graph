@@ -51,6 +51,7 @@
 //  e. output
 // 2. tweak input and output
 // 3. csv
+
 import chalk from 'chalk';
 import * as yargs from 'yargs';
 import * as path from 'path';
@@ -58,7 +59,6 @@ import { default as Enquirer } from 'enquirer';
 import * as fastglob from 'fast-glob';
 import { getInternalPackages } from '@rehearsal/ember-package-utils/module-mappings';
 import Graph from './utils/graph';
-import dfs from './utils/bfs';
 import Node from './utils/node';
 import { Arguments, Package } from './types';
 
@@ -80,11 +80,12 @@ const parser = yargs
         'Comma separated string of the addons to parse (ie. --addons global-utils, ...)',
       type: 'string',
     },
-    paths: {
-      describe:
-        'Comma separated string of the paths to parse (ie. --paths lib/global-utils, ...)',
-      type: 'string',
-    },
+    // This does not work yet.
+    // paths: {
+    //   describe:
+    //     'Comma separated string of the paths to parse (ie. --paths lib/global-utils, ...)',
+    //   type: 'string',
+    // },
     interactive: {
       describe: 'Uses interactive mode',
       alias: 'i',
@@ -315,12 +316,11 @@ function buildAnalyzedPackageTree(
   return graph;
 }
 
-function reportAnalysis(graph: Graph): void {
+function reportAnalysis(entry: Node, graph: Graph): void {
   if (ARGV.output === 'DEBUG') {
-    const dfsIterator = dfs(graph.nodes.values().next().value);
-    const dfsArray = Array.from(dfsIterator).reverse();
+    let sortedNodes: Node[] = graph.topSort();
+    let pkgName: string = entry?.content?.pkg.name ?? '';
 
-    const pkgName = dfsArray.pop()?.content?.pkg.name ?? '';
     console.log(
       `Order of conversion for ${chalk.bold(pkgName)}. ${chalk.red(
         'RED'
@@ -329,8 +329,10 @@ function reportAnalysis(graph: Graph): void {
       )}: has been converted (according to conversionLevel)`
     );
     const reportedNodes: Set<string> = new Set();
+
     let taskNumber = 1;
-    dfsArray.forEach((node) => {
+
+    sortedNodes.forEach((node) => {
       const packageData = node.content;
       const packageName = packageData.pkg.name;
       const duplicate = reportedNodes.has(packageName)
@@ -369,15 +371,16 @@ export default async function () {
   ARGV = (await parser.argv) as Arguments;
 
   const packages = await getPaths();
-  // loop through each package (should be a Package from package-utils)
+  // loop through each package
+  const graph = new Graph();
   packages.forEach((pkg) => {
-    const graph = new Graph();
-    const firstNode = graph.addNode({
+    const entry = graph.addNode({
       pkg,
       converted: analyzeTypescriptConversionForPackage(pkg),
     });
-    const analyzedTree = buildAnalyzedPackageTree(firstNode, graph);
-    reportAnalysis(analyzedTree);
+    const analyzedTree = buildAnalyzedPackageTree(entry, graph);
+    reportAnalysis(entry, analyzedTree);
   });
+
   process.exit(0);
 }
